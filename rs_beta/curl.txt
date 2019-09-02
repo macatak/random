@@ -1,0 +1,10 @@
+https://stackoverflow.com/questions/32863112/elasticsearch-bulk-index-api-via-rest-endpoint
+
+https://www.elastic.co/guide/en/elasticsearch/guide/current/bulk.html#_don_8217_t_repeat_yourself
+
+https://elasticsearch-py.readthedocs.io/en/master/helpers.html
+
+https://kb.objectrocket.com/elasticsearch/how-to-bulk-import-into-elasticsearch-using-curl
+
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'http://10.0.2.15:9200/tmdb/_bulk?pretty' --data-binary @test_10_1.json 
+

@@ -1,0 +1,205 @@
+GET _cat/indices
+GET _cat/indices/tmdb*
+DELETE tmdb
+DELETE tmdb_1
+DELETE 1-test
+
+get _template/tmdb*
+GET _template/test_1
+DELETE _template/test_1
+DELETE _template/1-test
+DELETE  _template/tmdb_template
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+
+GET tmdb/_search
+{
+  "query": {
+    "multi_match": {
+      "query": {},
+      "fields": ["title^10", "overview"]
+    }
+  }
+}
+
+GET tmdb/_search
+{
+  "query": {
+    "multi_match" : {
+      "query":    "basketball with cartoon aliens", 
+      "fields": [ "title", "overview" ] 
+    }
+  }
+}
+
+
+GET _cat/indices
+GET _cat/indices/tmdb*
+DELETE tmdb
+DELETE tmdb_1
+DELETE 1-test
+
+get _template/tmdb*
+GET _template/test_1
+DELETE _template/test_1
+DELETE _template/1-test
+DELETE  _template/tmdb_template
+
+PUT twitter
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "type": { "type": "keyword" }, 
+        "name": { "type": "text" },
+        "user_name": { "type": "keyword" },
+        "email": { "type": "keyword" },
+        "content": { "type": "text" },
+        "tweeted_at": { "type": "date" }
+      }
+    }
+  }
+}
+
+
+
+
+PUT _template/tmdb_template
+{
+  "index_patterns": ["tmdb*"],
+  "settings": {
+      "number_of_replicas": "0",
+      "number_of_shards": "1"
+  },
+  "mappings": {
+    "_source": {
+      "enabled": false
+    },
+    "properties": {
+      "title": {
+        "type": "text",
+        "analyzer": "english"
+      },
+      "overview": {
+        "type": "text",
+        "analyzer": "english"
+      }
+    }
+  }
+}
+
+PUT _template/1-tmdb_template
+{
+  "index_patterns": ["1-tmdb*"],
+  "settings": {
+      "number_of_replicas": "0",
+      "number_of_shards": "1"
+  },
+  "mappings": {
+    "_source": {
+      "enabled": false
+    },
+  "properties": {
+    "adult": { "type": "boolean" },
+    "backdrop_path": { "type": "text"  },
+    "belongs_to_collection": { "type": "text" },
+    "budget": { "type" : "float" },
+    "genres": {  "type" : "integer" },
+    "homepage": { "type" : "text" },
+    "id": {  "type" : "integer" },
+    "imdb_id": { "type": "text" },
+    "original_language": { "type": "text" },
+    "original_title": { "type": "text" },
+    "overview": {
+      "type": "text", 
+      "analyzer": "english" },
+    "popularity": {  "type" : "integer" },
+    "poster_path": { "type": "text" },
+    "release_date": { "type": "date" },
+    "revenue": {  "type" : "integer" },
+    "runtime": {  "type" : "integer" },
+    "status": { "type": "text" },
+    "tagline": { "type": "text" },
+    "title": {
+      "type": "text",
+      "analyzer": "english" },
+    "video" : { "type": "boolean" },
+    "vote_average" : {  "type" : "integer" },
+    "vote_count" : {  "type" : "integer" }
+  }
+}}  
+
+
+PUT tmdb
+{
+  "mappings": {
+
+      "properties": {
+        "title": { "type": "text",
+        "analyzer" : "english"}, 
+        "overview": { "type": "text",
+         "analyzer": "english"}
+      }
+    }
+  
+}
+
+
+PUT /tmdb/_mapping
+{
+  "mappings": {
+    "properties": {
+      "fields": {
+        "title": { 
+          "type":     "text",
+          "analyzer": "english"
+          },
+        "overview": {
+          "type":     "text",
+          "analyzer": "english"
+          }
+        }
+      }
+    }
+  }
+
+
+GET /tmdb/_search 
+{
+    "query" : {
+        "match" : {
+            "title" : "Shadows in Paradise"
+        }
+    }
+}
+
+
+PUT _template/1-test
+{
+  "index_patterns": ["1-test"],
+  "settings": {
+      "number_of_replicas": "0",
+      "number_of_shards": "1"
+  },
+  "mappings": {
+    "_source": {
+      "enabled": false
+    },
+    "properties": {
+      "title": {
+        "type": "text",
+        "analyzer": "english"
+      },
+      "overview": {
+        "type": "text",
+        "analyzer": "english"
+      }
+    }
+  }
+}
