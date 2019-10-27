@@ -1,0 +1,176 @@
+sed - awk
+
+You invoke sed and awk in much the same way. The command-line syntax is:
+command [ options ] script filename
+
+Like almost all UNIX programs, sed and awk can take input from standard input and send the output to standard output. If a filename is specified, input is taken from that file. The output contains the processed information.
+
+the -f option that allows you to specify the name of a script file. 
+sed -f scriptfile inputfile
+
+In writing a
+script, keep in mind the sequence in which instructions will be executed and how
+each instruction changes the input line.
+In sed and awk, each instruction has two parts: a patter n and a pr ocedure. The
+patter n is a regular expression delimited with slashes (/). A procedur e specifies
+one or more actions to be perfor med.
+
+As each line of input is read, the program reads the first instruction in the script
+and checks the patter n against the current line. If there is no match, the pr ocedure
+is ignored and the next instruction is read.
+
+When all the applicable instructions have been interpreted and applied for a single
+line, sed outputs the line and repeats the cycle for each input line. Awk, on the
+other hand, does not automatically output the line; the instructions in your script
+contr ol what is finally done with it.
+
+The contents of a procedur e ar e very differ ent in sed and awk. In sed, the proce-
+dur e consists of editing commands like those used in the line editor. Most com-
+mands consist of a single letter.
+In awk, the procedur e consists of programming statements and functions. A proce-
+dur e must be surrounded by braces.
+
+
+sed
+using list
+
+the s command for substitution to replace “MA” with “Massachusetts.”
+sed ’s/MA/Massachusetts/’ list
+
+Enclosing the instruction in single quotes is not requir ed in all cases but you
+should get in the habit of always doing it. The enclosing single quotes prevent the
+shell from interpreting special characters or spaces found in the editing instruction.
+
+example could have been entered without them but in the
+next example they are requir ed, since the substitution command contains spaces:
+sed 's/ MA/, Massachusetts/' list
+
+In order to place a comma between the city and state, the instruction replaced the
+space before the two-letter abbreviation with a comma and a space
+
+Ther e ar e thr ee ways to specify multiple instructions on the command line:
+1.
+Separate instructions with a semicolon.
+sed ’s/ MA/, Massachusetts/; s/ PA/, Pennsylvania/’ list
+2.
+Precede each instruction by -e.
+sed -e ’s/ MA/, Massachusetts/’ -e ’s/ PA/, Pennsylvania/’ list
+3.
+Use the multiline entry capability of the Bourne shell. * Pr ess RETURN after
+entering a single quote
+
+In the example above, changes were made to five lines and, of course, all lines
+wer e displayed. Remember that nothing has changed in the input file.
+
+???install gnu sed ???
+
+
+run from a file
+sed -f sedscr list
+
+Once again, the result is ephemeral, displayed on the screen. No change is made
+to the input file.
+
+save it to a file
+sed -f sedscr list > newlist
+
+Do not redir ect the output to the file you are editing or you will clobber it. (The
+“>” redir ection operator truncates the file before the shell does anything else.)
+
+The -n option sup-
+pr esses the automatic output. When specifying this option, each instruction
+intended to produce output must contain a print command, p.
+
+sed -n -e 's/MA/Massachusetts/p' list
+
+You can build up a script by combining both the -e and -f options on the com-
+mand line. The script is the combination of all the commands in the order given.
+
+
+
+
+awk
+wk executes a set of instructions for each line of input. You can specify
+instructions on the command line or create a script file.
+
+awk ’instructions’ files
+Input is read a line at a time from one or more files or from standard input. The
+instructions must be enclosed in single quotes to protect them from the shell.
+(Instructions almost always contain curly braces and/or dollar signs, which are
+interpr eted as special characters by the shell.)
+
+Awk programs are usually placed in a file where they can be tested and modified.
+The syntax for invoking awk with a script file is:
+awk -f script files
+
+awk instructions have the same structure as sed, consisting of patter n and
+pr ocedure sections, the procedur es themselves are quite differ ent. Her e is where
+awk looks less like an editor and more like a programming language
+
+Awk, in the usual case, interprets each input line as a record and each word on
+that line, delimited by spaces or tabs, as a field. (These defaults can be changed.)
+One or more consecutive spaces or tabs count as a single delimiter. Awk allows
+you to refer ence these fields, in either patterns or procedur es. $0 repr esents the
+entir e input line. $1, $2, . . . refer to the individual fields on the input line.
+
+awk ’{ print $1 }’ list
+
+“$1” refers to the value of the first field on each input line. Because there is no
+patter n specified, the print statement is applied to all lines. The default action is to print each line that matches the pattern.
+
+awk '/MA/' list
+
+an awk program can be
+used more like a query language, extracting useful information from a file
+
+must contain the string “MA”.
+awk '/MA/ { print $1 }' list
+
+use the -F option to change the field separator to a
+comma. This allows us to retrieve any of three fields: the full name, the street
+addr ess, or the city and state.
+
+awk -F, '/MA/ { print $1 }' list
+
+Do not confuse the -F option to change the field separator with the -f option to
+specify the name of a script file.
+
+print each field on its own line. Multiple commands are separated by semicolons.
+
+ awk -F, '{ print $1; print $2; print $3 }' list
+
+Messages can be caused by
+any of the following:
+• Not enclosing a procedur e within braces ({})
+• Not surrounding the instructions within single quotes (‘’)
+• Not enclosing regular expressions within slashes (//)
+
+
+Using sed and awk Together
+
+The sed script that replaced the postal abbreviation of a state with its full
+name is general enough that it might be used again as a script file named name-
+State
+
+the output produced by nameState is piped to
+an awk program that extracts the name of the state from each record
+
+sed -f nameState list | awk -F, '{ print $4 }'
+
+The awk program is processing the output produced by the sed script. Remember
+that the sed script replaces the abbreviation with a comma and the full name of
+the state. In effect, it splits the third field containing the city and state into two
+fields. “$4” refer ences the fourth field.
+
+While the result of this program is not very useful, it could be passed to sor t |
+uniq -c, which would sort the states into an alphabetical list with a count of the
+number of occurrences of each state
+
+We want to produce a report
+that sorts the names by state and lists the name of the state followed by the name
+of each person residing in that state. The following example shows the byState
+
+sed -f nameState list | ./byState
+
+
+

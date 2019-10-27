@@ -1,0 +1,52 @@
+awk-101
+
+running this cmd
+echo ’this line of data is ignored’ > test
+
+awk '{ print "Hello, world" }' test
+    Hello, world
+
+This script has only a single action, which is enclosed in braces. That action is to execute the print statement for each line of input. In this case, the test file contains only a single line; thus, the action occurs once. Note that the input line is read but never output.
+
+echo ’Hello, world’ > test2
+awk '{ print }' test2
+    ’Hello, world’
+
+the print statement, without arguments, simply outputs each line of input
+
+Both of these examples illustrate that awk is usually input-driven.
+
+The BEGIN patter n specifies actions that are per formed befor e the first line of input is read.
+awk 'BEGIN { print "Hello, world" }'
+    Hello, world
+
+You can think of an awk script as having potentially three major parts: what happens before, what happens during, and what happens after processing the input.
+
+An awk program consists of what we will call a main input loop. A loop is a routine that is executed over and over again until some condition exists that terminates it. You don’t write this loop, it is given
+The main input loop in awk is a routine that reads one line of input from a file and makes it available for processing. The actions you write to do the processing assume that there is a line of input available.
+The main input loop is executed as many times as there are lines of input. This loop does not execute until there is a line of input. It terminates when there is no more input to be read
+
+Awk allows you to write two special routines that can be executed before any 
+input is read and after all input is read, the BEGIN and END rules you can do some preprocessing before the main input loop is ever executed and you can do some post-pr ocessing after the main input loop has terminated. The BEGIN and END procedures are optional.
+
+Consider the following script:
+/^$/ { print "This is a blank line." }
+This script reads: if the input line is blank, then print “This is a blank line.” The pattern is written as a regular expression that identifies a blank line.
+
+script to print if characters are ints, string, or blank
+cat awkscr2-regex 
+# test for integer, string or empty line.
+/[0-9]+/ { print "That is an integer" }
+/[A-Za-z]+/ { print "This is a string" }
+/^$/ { print "This is a blank line." }
+
+run it...
+awk -f awkscr2-regex
+... then type something in
+
+comments start with a #
+
+page 143
+
+
+

@@ -1,0 +1,48 @@
+sed
+
+-e Editing instruction follows.
+-f Filename of script follows.
+-n Suppr ess automatic output of input lines.
+
+
+
+Command-Line Options for awk
+Option Description
+-f Filename of script follows.
+-F Change field separator.
+-v var=value follows.
+
+Regex
+Useful Regular Expressions
+Postal Abbreviation for State
+    <space>[A-Z][A-Z]<space>
+City, State
+    ˆ.*, [A-Z][A-Z]
+City, State, Zip (POSIX egrep)
+    ˆ.*, [A-Z][A-Z] [0-9]{5}(-[0-9]{4})?
+Month, Day, Year
+    [A-Z][a-z]\{3,9\} [0-9]\{1,2\}, [0-9]\{4\}
+U.S. Social Security Number
+    [0-9]\{3\}-[0-9]\{2\}-[0-9]\{4\}
+North-American Local Telephone 
+    [0-9]\{3\}-[0-9]\{4\}
+For matted Dollar Amounts 
+    \$[ 0-9]*\.[0-9][0-9]
+trof f In-line Font Requests 
+    \\f[(BIRP]C*[BW]*
+trof f Requests 
+    ˆ\.[a-z]\{2\}
+trof f Macros 
+    ˆ\.[A-Z12].
+trof f Macro with arguments 
+    ˆ\.[A-Z12]. ”.*”
+HTML In-line Codes 
+    <[ˆ>]*>
+Ventura Publisher Style Codes 
+    ˆ@.* = .*
+Match blank lines 
+    ˆ$
+Match entire line 
+    ˆ.*$
+Match one or more spaces
+    <space><space>*

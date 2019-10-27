@@ -1,0 +1,27 @@
+#! /bin/sh
+
+#This shell script has three parts. 
+
+# 1 - The program invokes awk to produce input for the sort program
+# read input from the nameState program
+# expects “$4” to be the name of the state.
+awk -F, '{ 
+	print $4 ", " $0 
+	}' $* | 
+	
+# pass to sort	
+sort |
+
+#  invokes awk again to test the sorted input and determine if the name of the state in the current record is the same as in the previous record.
+awk -F, '
+# assigning a variable
+# testing the first field of each input line to see if it contains a variable string
+# and printing a tab to align the output data.
+$1 == LastState { 
+	print "\t" $2 
+}
+$1 != LastState { 
+	LastState = $1
+	print $1 
+	print "\t" $2
+}'

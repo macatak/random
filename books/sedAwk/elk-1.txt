@@ -1,0 +1,10 @@
+kibana_sample_data_logs            green   11.4mb 1 0
+.kibana_task_manager               green   45.6kb 1 0
+ct_etf                             yellow    283b 1 1
+kibana_sample_data_ecommerce       green    4.6mb 1 0
+metricbeat-7.2.0-2019.08.07-000002 yellow     2mb 1 1
+metricbeat-7.2.0-2019.07.07-000001 yellow   1.6mb 1 1
+metricbeat-7.2.0-2019.10.27-000004 yellow 142.2kb 1 1
+kibana_sample_data_flights         green    6.3mb 1 0
+.kibana_1                          green    1.1mb 1 0
+metricbeat-7.2.0-2019.09.22-000003 yellow   5.5mb 1 1
