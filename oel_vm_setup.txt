@@ -1,0 +1,84 @@
+memory to fit system
+HDD is dynamic, go with a higher amount
+ML may require lot of data to train
+
+
+Settings
+general/advanced - Enable bidirectional clipboard & D&D
+System - More CPU
+
+Storage - Controller IDE - Empty : point this to the ISO
+VMware will let you drag and drop easily
+VBox - Setup a Shared Folder
+
+Click OK
+Click Start it
+
+Install
+Up arrow to install
+... wait ...
+go w/ defaults for Lang/KBD
+
+
+Install Summary
+Click on "Software Selection"
+Base Environment -> Server w/ GUI
+
+Installation Destination
+Click it, click Done
+
+Passwords
+Set a root password
+
+Create a user
+I use the same password
+Check "make this user an admin"
+Click done
+...wait...
+Reboot
+
+Accept the license
+scroll all the way down
+click the checkbox
+click done
+
+Click Netowrk
+Turn it on
+Click Done
+
+Click Finish Configuration
+Log in
+Keep clicking Next
+Exit the Getting Started Page
+Shutdown
+
+Snapshot!!!
+
+Turn it back on
+
+/etc/environment
+sudo cp /etc/environment /etc/environment.orig
+edit w/ GM creds
+this allows internet access
+
+sudo yum update
+
+Snapshot
+
+yum group list
+yum groupinstall "Development Tools"
+yum install epel-release -y
+yum install kernel-devel
+Install  Guest Additions
+snapshot
+
+Python 3
+yum install python3-3.6.8-10.0.1.el7.x86_64
+faker
+
+Atom
+script
+Python
+neon UI
+elasticsearch
+logstash
