@@ -44,6 +44,7 @@ click done
 
 Click Netowrk
 Turn it on
+Set it to start at boot
 Click Done
 
 Click Finish Configuration
@@ -56,6 +57,15 @@ Snapshot!!!
 
 Turn it back on
 
+Guest Additions
+6  sudo yum list kernel-uek-devel
+7  sudo yum install kernel-uek-devel.x86_64
+8  sudo yum list kernel-devel
+9  sudu yum install kernel-devel.x86_64
+Install
+Shutdown
+Snapshot
+
 /etc/environment
 sudo cp /etc/environment /etc/environment.orig
 edit w/ GM creds
@@ -67,18 +77,61 @@ Snapshot
 
 yum group list
 yum groupinstall "Development Tools"
-yum install epel-release -y
-yum install kernel-devel
-Install  Guest Additions
+sudo yum install oracle-epel-release-el7.x86_64
+Set background/power
+
 snapshot
 
 Python 3
-yum install python3-3.6.8-10.0.1.el7.x86_64
-faker
+sudo yum install python3-3.6.8-10.0.1.el7.x86_64 -y
+python3 -m pip install --upgrade pip --user
 
-Atom
-script
+packages
+python3 -m pip install requests elasticsearch elasticsearch-dsl faker --user
+
+ML basic
+python3 -m pip install pandas tensorflow matplotlib scikit-learn numpy  --user
+
+ML Adavanced
+python3 -m pip install theano keras torch seaborn scipy --user
+??? p1attern
+
+Atomscript
+cd Downloads
+mkdir atom
+cd atom
+sudo rpm --import https://packagecloud.io/AtomEditor/atom/gpgkey
+sudo sh -c 'echo -e "[Atom]\nname=Atom Editor\nbaseurl=https://packagecloud.io/AtomEditor/atom/el/7/\$basearch\nenabled=1\ngpgcheck=0\nrepo_gpgcheck=1\ngpgkey=https://packagecloud.io/AtomEditor/atom/gpgkey" > /etc/yum.repos.d/atom.repo'
+sudo yum install atom -y
+
+adds req'd Python backend, doesn't completely fix the error
+python3 -m pip install 'python-language-server[all]' --user
+
+Launch it type 'atom'
+
+Package install
+-script
 Python
-neon UI
-elasticsearch
-logstash
+-IDE
+-python-tools
+Logstash
+language-logstash
+Click Themes
+neon-syntax
+neon-dark
+
+Test it
+go to the home folder
+mkdir -p atom_workspace/python
+Add it as a project root
+creater a hello.py file
+add this...
+
+#!/usr/bin/python3
+
+import sys
+print(sys.version)
+
+print("Hello World")
+
+hit CTRL+SHIFT+b
